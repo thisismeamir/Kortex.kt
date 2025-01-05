@@ -45,5 +45,5 @@ bin/
 .DS_Store
 /uploads/
 /gradle/
-/.idea/
-/gradle/
+/.idea/*
+/gradle/*
