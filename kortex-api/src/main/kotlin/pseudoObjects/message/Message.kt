@@ -7,8 +7,8 @@ package pseudoObjects.message
  *
  *
  */
-interface Message<T> {
+interface Message {
     val role: MessageRole
-    val content: T
+    val content: MessageContent
     val name: String
 }

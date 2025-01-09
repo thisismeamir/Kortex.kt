@@ -1,0 +1,3 @@
+package pseudoObjects.message
+
+interface MessageContent
