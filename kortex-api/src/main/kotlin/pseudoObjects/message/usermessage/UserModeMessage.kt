@@ -9,6 +9,6 @@ import pseudoObjects.message.MessageRole
 data class UserModeMessage(
     override val name: String,
     override val content: UserModeMessageContent
-) : Message<UserModeMessageContent> {
+) : Message {
     override val role: MessageRole = MessageRole.USER
 }
