@@ -9,6 +9,6 @@ import pseudoObjects.message.MessageRole
 data class SystemModeMessage(
     override val name: String,
     override val content: SystemlModeMessageContent
-) : Message<SystemlModeMessageContent> {
+) : Message {
     override val role: MessageRole = MessageRole.SYSTEM
 }
