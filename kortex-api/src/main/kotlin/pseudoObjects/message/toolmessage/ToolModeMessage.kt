@@ -10,7 +10,7 @@ data class ToolModeMessage(
     override val content: ToolModeMessageContent,
     override val name: String,
     val toolID: String
-) : Message<ToolModeMessageContent> {
+) : Message {
     override val role: MessageRole
         get() = MessageRole.TOOL
 }
