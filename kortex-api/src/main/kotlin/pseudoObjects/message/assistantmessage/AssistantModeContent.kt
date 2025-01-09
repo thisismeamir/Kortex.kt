@@ -1,5 +1,7 @@
 package pseudoObjects.message.assistantmessage
 
-interface AssistantModeContent {
+import pseudoObjects.message.MessageContent
+
+interface AssistantModeContent: MessageContent {
     val type: String
 }

@@ -12,7 +12,7 @@ data class AssistantModeMessage(
     override val name: String,
     val refusal: String?,
     val toolCalls: Triple<String, String, Map<String, List<String>>> // id, type, name to arguments.
-) : Message<AssistantModeContent> {
+) : Message {
     override val role: MessageRole
         get() = MessageRole.ASSISTANT
 }
