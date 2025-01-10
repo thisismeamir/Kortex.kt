@@ -1,16 +1,3 @@
-import apiObjects.*
-import apiObjects.chatcompletions.*
-import apiObjects.chatcompletions.audio.Audio
-import apiObjects.chatcompletions.audio.StreamOptions
-import apiObjects.configuration.UpdateConfigurationSettingsRequest
-import apiObjects.embedding.EmbeddingRequest
-import apiObjects.engine.InstallEngineRequest
-import apiObjects.engine.SetDefaultEngineVariantRequest
-import apiObjects.engine.UninstallEngineRequest
-import apiObjects.model.*
-import apiObjects.thread.CreateMessageRequest
-import apiObjects.thread.ModifyMessageRequest
-import apiObjects.thread.Thread
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
@@ -28,6 +15,14 @@ import utils.stopCortexCpp
 import java.io.File
 import kotlin.properties.Delegates
 import kotlinx.serialization.json.decodeFromJsonElement
+import pseudo.request.objects.EmbeddingRequest
+import pseudo.request.objects.embedding.EmbeddingResponse
+import pseudo.request.objects.engine.InstallEngineRequest
+import pseudo.request.objects.engine.SetDefaultEngineVariantRequest
+import pseudo.request.objects.engine.UninstallEngineRequest
+import requestObjects.ChatCompletionRequest
+import responseObjects.ChatCompletionResponse
+
 class Kortex {
 
     var port by Delegates.notNull<Int>()
@@ -76,156 +71,18 @@ class Kortex {
 
     /**
      * This function sends a POST request to the server to create a chat completion.
-     * @param audio: The audio object
-     * @param dynatempExponent: The dynatemp exponent
-     * @param dynatempRange: The dynatemp range
-     * @param frequencyPenalty: The frequency penalty
-     * @param ignoreEos: The ignore eos flag
-     * @param logitBias: The logit bias object
-     * @param logprobs: The logprobs flag
-     * @param maxCompletionTokens: The max completion tokens
-     * @param maxTokens: The max tokens
-     * @param messages: The list of messages
-     * @param metadata: The metadata object
-     * @param minKeep: The min keep
-     * @param minP: The min p
-     * @param mirostat: The mirostat flag
-     * @param mirostatEta: The mirostat eta
-     * @param mirostatTau: The mirostat tau
-     * @param modalities: The modalities object
-     * @param model: The model
-     * @param n: The n
-     * @param nProbs: The n probs
-     * @param parallelToolCalls: The parallel tool calls flag
-     * @param penalizeNl: The penalize nl flag
-     * @param presencePenalty: The presence penalty
-     * @param repeatLastN: The repeat last n
-     * @param repeatPenalty: The repeat penalty
-     * @param responseFormat: The response format object
-     * @param seed: The seed
-     * @param serviceTier: The service tier
-     * @param stop: The stop object
-     * @param store: The store flag
-     * @param stream: The stream flag
-     * @param streamOptions: The stream options
-     * @param temperature: The temperature
-     * @param tfsZ: The tfs z
-     * @param toolChoice: The tool choice
-     * @param tools: The list of tools
-     * @param topK: The top k
-     * @param topLogprobs: The top logprobs
-     * @param topP: The top p
-     * @param typP: The typ p
-     * @param user: The user
-     * @return: The HttpResponse object
-     * @throws: Exception if the request fails
-     * @see: apiObjects.chatcompletions.ChatCompletionRequest
-     * @see: HttpResponse
-     * @see: apiObjects.chatcompletions.audio.Audio
-     * @see: apiObjects.chatcompletions.LogitBias
-     * @see: apiObjects.chatcompletions.Message
-     * @see: apiObjects.chatcompletions.Metadata
-     * @see: apiObjects.chatcompletions.Modalities
-     * @see: apiObjects.chatcompletions.ResponseFormat
-     * @see: apiObjects.chatcompletions.Tool
-     * @see: apiObjects.chatcompletions.Function
-     * @see: HttpResponse
-     * @see: HttpClient
-     * @see: ContentType
-     * @see: setBody
-     * @see: post
+     * @param request ChatCompletionRequest Object
+     * @see ChatCompletionRequest
+     * @return ChatCompletionResponse Object
      */
     suspend fun createChatCompletion(
-        audio: Audio,
-        dynatempExponent: Int,
-        dynatempRange: Int,
-        frequencyPenalty: Double,
-        ignoreEos: Boolean,
-        logitBias: LogitBias,
-        logprobs: Boolean,
-        maxCompletionTokens: Int,
-        maxTokens: Int,
-        messages: List<Message>,
-        metadata: Metadata,
-        minKeep: Int,
-        minP: Int,
-        mirostat: Boolean,
-        mirostatEta: Int,
-        mirostatTau: Int,
-        modalities: Modalities,
-        model: String,
-        n: Int,
-        nProbs: Int,
-        parallelToolCalls: Boolean,
-        penalizeNl: Boolean,
-        presencePenalty: Double,
-        repeatLastN: Int,
-        repeatPenalty: Double,
-        responseFormat: ResponseFormat,
-        seed: Int,
-        serviceTier: String,
-        stop: Map<String, String>,
-        store: Boolean,
-        stream: Boolean,
-        streamOptions: StreamOptions?,
-        temperature: Double,
-        tfsZ: Int,
-        toolChoice: String,
-        tools: List<Tool>,
-        topK: Int,
-        topLogprobs: Int,
-        topP: Double,
-        typP: Int,
-        user: String
-    ): HttpResponse {
-        val requestBody = ChatCompletionRequest(
-            audio = audio,
-            dynatempExponent = dynatempExponent,
-            dynatempRange = dynatempRange,
-            frequencyPenalty = frequencyPenalty,
-            ignoreEos = ignoreEos,
-            logitBias = logitBias,
-            logprobs = logprobs,
-            maxCompletionTokens = maxCompletionTokens,
-            maxTokens = maxTokens,
-            messages = messages,
-            metadata = metadata,
-            minKeep = minKeep,
-            minP = minP,
-            mirostat = mirostat,
-            mirostatEta = mirostatEta,
-            mirostatTau = mirostatTau,
-            modalities = modalities,
-            model = model,
-            n = n,
-            nProbs = nProbs,
-            parallelToolCalls = parallelToolCalls,
-            penalizeNl = penalizeNl,
-            presencePenalty = presencePenalty,
-            repeatLastN = repeatLastN,
-            repeatPenalty = repeatPenalty,
-            responseFormat = responseFormat,
-            seed = seed,
-            serviceTier = serviceTier,
-            stop = stop,
-            store = store,
-            stream = stream,
-            streamOptions = streamOptions,
-            temperature = temperature,
-            tfsZ = tfsZ,
-            toolChoice = toolChoice,
-            tools = tools,
-            topK = topK,
-            topLogprobs = topLogprobs,
-            topP = topP,
-            typP = typP,
-            user = user
-        )
-
-        return client.post("http://127.0.0.1:${this.port}/v1/chat/completions") {
+        request: ChatCompletionRequest
+    ): ChatCompletionResponse {
+        val response = client.post("http://127.0.0.1:${this.port}/v1/chat/completions") {
             contentType(ContentType.Application.Json)
-            setBody(requestBody)
+            setBody(request)
         }
+        return Json.decodeFromString<ChatCompletionResponse>(response.bodyAsText())
     }
 
     /**
@@ -238,20 +95,15 @@ class Kortex {
      * @see: apiObjects.embedding.EmbeddingRequest
      */
     suspend fun createEmbedding(
-        encodingFormat: String = "float",
-        input: Double,
-        model: String
-    ): HttpResponse {
-        val requestBody = EmbeddingRequest(
-            encodingFormat = encodingFormat,
-            input = input,
-            model = model
-        )
-
-        return client.post("http://127.0.0.1:${this.port}/v1/embeddings") {
+        request: EmbeddingRequest
+    ): List<EmbeddingResponse> {
+        val response = client.post("http://127.0.0.1:${this.port}/v1/embeddings") {
             contentType(ContentType.Application.Json)
-            setBody(requestBody)
+            setBody(request)
         }
+
+        return Json.decodeFromString<List<EmbeddingResponse>>(response.bodyAsText())
+
     }
 
     /**
@@ -771,112 +623,109 @@ class Kortex {
 
     }
 
-        /**
-         * This function sends a POST request to the server to unload a model from memory.
-         * @param model: The downloaded model name (required)
-         * @return: The HttpResponse object
-         * @throws: Exception if the request fails
-         */
-        suspend fun stopModel(model: String): HttpResponse {
-            val requestBody = StopModelRequest(model)
+    /**
+     * This function sends a POST request to the server to unload a model from memory.
+     * @param model: The downloaded model name (required)
+     * @return: The HttpResponse object
+     * @throws: Exception if the request fails
+     */
+    suspend fun stopModel(model: String): HttpResponse {
+        val requestBody = StopModelRequest(model)
 
-            return client.post("http://127.0.0.1:${this.port}/v1/models/stop") {
-                contentType(ContentType.Application.Json)
-                setBody(requestBody)
-            }
+        return client.post("http://127.0.0.1:${this.port}/v1/models/stop") {
+            contentType(ContentType.Application.Json)
+            setBody(requestBody)
         }
+    }
 
-        /**
-         * This function sends a DELETE request to the server to delete a model.
-         * @param id: The unique identifier of the model to delete
-         * @return: The HttpResponse object
-         * @throws: Exception if the request fails
-         */
-        suspend fun deleteModel(id: String): HttpResponse {
-            return client.delete("http://127.0.0.1:${this.port}/v1/models/$id") {
-                contentType(ContentType.Text.Plain.withCharset(Charsets.UTF_8))
-                setBody("")
-            }
+    /**
+     * This function sends a DELETE request to the server to delete a model.
+     * @param id: The unique identifier of the model to delete
+     * @return: The HttpResponse object
+     * @throws: Exception if the request fails
+     */
+    suspend fun deleteModel(id: String): HttpResponse {
+        return client.delete("http://127.0.0.1:${this.port}/v1/models/$id") {
+            contentType(ContentType.Text.Plain.withCharset(Charsets.UTF_8))
+            setBody("")
         }
+    }
 
-        /**
-         * This function sends a GET request to the server to retrieve a model instance.
-         * @param id: The unique identifier of the model
-         * @return: The HttpResponse object
-         * @throws: Exception if the request fails
-         */
-        suspend fun getModel(id: String): HttpResponse {
-            return client.get("http://127.0.0.1:${this.port}/v1/models/$id") {
-                contentType(ContentType.Application.Json)
-            }
+    /**
+     * This function sends a GET request to the server to retrieve a model instance.
+     * @param id: The unique identifier of the model
+     * @return: The HttpResponse object
+     * @throws: Exception if the request fails
+     */
+    suspend fun getModel(id: String): HttpResponse {
+        return client.get("http://127.0.0.1:${this.port}/v1/models/$id") {
+            contentType(ContentType.Application.Json)
         }
+    }
 
-        /**
-         * This function sends a PATCH request to the server to update a model instance.
-         * @param modelId: The unique identifier of the model to update
-         * @param request: The apiObjects.model.UpdateModelRequest object containing the model details
-         * @return: The HttpResponse object
-         * @throws: Exception if the request fails
-         */
-        suspend fun updateModel(modelId: String, request: UpdateModelRequest): HttpResponse {
-            return client.patch("http://127.0.0.1:${this.port}/v1/models/$modelId") {
-                contentType(ContentType.Application.Json)
-                setBody(request)
-            }
+    /**
+     * This function sends a PATCH request to the server to update a model instance.
+     * @param modelId: The unique identifier of the model to update
+     * @param request: The apiObjects.model.UpdateModelRequest object containing the model details
+     * @return: The HttpResponse object
+     * @throws: Exception if the request fails
+     */
+    suspend fun updateModel(modelId: String, request: UpdateModelRequest): HttpResponse {
+        return client.patch("http://127.0.0.1:${this.port}/v1/models/$modelId") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
         }
+    }
 
-        /**
-         * This function sends a GET request to the server to check the application's health status.
-         * @return: The HttpResponse object
-         * @throws: Exception if the request fails
-         */
-        suspend fun checkHealth(): HttpResponse {
-            return client.get("http://127.0.0.1:${this.port}/healthz") {
-                contentType(ContentType.Application.Json)
-            }
+    /**
+     * This function sends a GET request to the server to check the application's health status.
+     * @return: The HttpResponse object
+     * @throws: Exception if the request fails
+     */
+    suspend fun checkHealth(): HttpResponse {
+        return client.get("http://127.0.0.1:${this.port}/healthz") {
+            contentType(ContentType.Application.Json)
         }
+    }
 
-        /**
-         * This function sends a DELETE request to the server to initiate the shutdown process.
-         * @return: The HttpResponse object
-         * @throws: Exception if the request fails
-         */
-        suspend fun terminateServer(): HttpResponse {
-            return client.delete("http://127.0.0.1:${this.port}/processManager/destroy") {
-                contentType(ContentType.Text.Plain.withCharset(Charsets.UTF_8))
-                setBody("")
-            }
-        }
-
-
-        /**
-         * This function sends a GET request to the server to retrieve the current configuration settings.
-         * @return: The HttpResponse object
-         * @throws: Exception if the request fails
-         */
-        suspend fun getConfigurations(): HttpResponse {
-            return client.get("http://127.0.0.1:${this.port}/v1/configs") {
-                contentType(ContentType.Application.Json)
-            }
-        }
-
-        /**
-         * This function sends a PATCH request to the server to update the configuration settings.
-         * @param request: The apiObjects.configuration.UpdateConfigurationSettingsRequest object containing the configuration settings
-         * @return: The HttpResponse object
-         * @throws: Exception if the request fails
-         */
-        suspend fun updateConfigurationSettings(request: UpdateConfigurationSettingsRequest): HttpResponse {
-            return client.patch("http://127.0.0.1:${this.port}/v1/configs") {
-                contentType(ContentType.Application.Json)
-                setBody(request)
-            }
-        }
-
-        fun stop() {
-            stopCortexCpp()
+    /**
+     * This function sends a DELETE request to the server to initiate the shutdown process.
+     * @return: The HttpResponse object
+     * @throws: Exception if the request fails
+     */
+    suspend fun terminateServer(): HttpResponse {
+        return client.delete("http://127.0.0.1:${this.port}/processManager/destroy") {
+            contentType(ContentType.Text.Plain.withCharset(Charsets.UTF_8))
+            setBody("")
         }
     }
 
 
+    /**
+     * This function sends a GET request to the server to retrieve the current configuration settings.
+     * @return: The HttpResponse object
+     * @throws: Exception if the request fails
+     */
+    suspend fun getConfigurations(): HttpResponse {
+        return client.get("http://127.0.0.1:${this.port}/v1/configs") {
+            contentType(ContentType.Application.Json)
+        }
+    }
 
+    /**
+     * This function sends a PATCH request to the server to update the configuration settings.
+     * @param request: The apiObjects.configuration.UpdateConfigurationSettingsRequest object containing the configuration settings
+     * @return: The HttpResponse object
+     * @throws: Exception if the request fails
+     */
+    suspend fun updateConfigurationSettings(request: UpdateConfigurationSettingsRequest): HttpResponse {
+        return client.patch("http://127.0.0.1:${this.port}/v1/configs") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+    }
+
+    fun stop() {
+        stopCortexCpp()
+    }
+}

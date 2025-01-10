@@ -1,5 +1,10 @@
 package pseudo.request.objects.message
 
+import kotlinx.serialization.Serializable
+
+
+
+@Serializable
 /**
  * Array of chat messages to be used for generating the chat completion.
  * Depending on the model you use, different message types (modalities) are supported,
@@ -7,8 +12,8 @@ package pseudo.request.objects.message
  *
  *
  */
-interface Message {
-    val role: MessageRole
-    val content: MessageContent
-    val name: String
-}
+data class Message (
+     val role: String = MessageRole.USER.name.lowercase(),
+     val content: String,
+     val name: String
+    )

@@ -5,11 +5,11 @@ package pseudo.request.objects
  * Setting to { "type": "json_object" } enables JSON mode,
  * which guarantees the message the model generates is valid JSON.
  * @property TEXT
- * @property JSONOBJECT
- * @property JSONSCHEMA
+ * @property JSON_OBJECT
+ * @property JSON_SCHEMA
  */
 enum class ResponseFormat {
     TEXT,
-    JSONOBJECT,
-    JSONSCHEMA
+    JSON_OBJECT,
+    JSON_SCHEMA
 }
