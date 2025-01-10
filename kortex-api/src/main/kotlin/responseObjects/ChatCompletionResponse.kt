@@ -12,8 +12,8 @@ import pseudo.response.objects.Usage
  * @param id The completion ID
  * @param model The model used for the completion
  * @param `object` The object used for the completion
- * @param serviceTier The service tier used for the completion
- * @param systemFingerprint The system fingerprint
+ * @param service_tier The service tier used for the completion
+ * @param system_fingerprint The system fingerprint
  * @param usage The token usage statistics for the entire request
  * @see Choice
  * @see ChatCompletionRequest
@@ -24,8 +24,9 @@ data class ChatCompletionResponse(
     val id: String,
     val model: String,
     val `object`: String,
-    val serviceTier: String?,
-    val systemFingerprint: String,
-    val usage: Usage
+    val service_tier: String?,
+    val system_fingerprint: String,
+    val usage: Usage,
+    val message: String?
 )
 

@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 data class Logprobs(
     val content: List<Logprob>,
     val refusal: List<Logprob>,
-    val topLogprobs: List<Logprob>
+    val top_logprobs: List<Logprob>
 )

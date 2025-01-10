@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Choice(
-    val finishReason: String,
+    val finish_reason: String,
     val index: Int,
     val logprobs: Logprobs,
     val message: ResponseMessage
