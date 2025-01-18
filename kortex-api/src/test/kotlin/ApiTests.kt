@@ -1,5 +1,9 @@
 import io.ktor.client.*
-import kotlinx.coroutines.coroutineScope
+import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.serialization.kotlinx.json.*
+import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.json.Json
 import org.testng.annotations.BeforeTest
 import org.testng.annotations.Test
 import utils.CortexLogLevel
@@ -15,13 +19,15 @@ class ApiTests {
     @BeforeTest
     fun setupCortex() {
         startCortexCpp(port, CortexLogLevel.TRACE)
+        client = HttpClient(CIO) {
+            install(ContentNegotiation) {
+                json(Json { prettyPrint = true; ignoreUnknownKeys = true })
+            }
+        }
+        kortex = Kortex(port, CortexLogLevel.TRACE)
     }
 
     @Test
-    suspend fun setup() {
-        kortex = Kortex()
-        coroutineScope {
-            kortex.getConfigurations()
-        }
+    fun testChatCompletion() = runBlocking {
     }
 }
