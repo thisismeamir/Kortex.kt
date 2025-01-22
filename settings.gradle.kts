@@ -23,4 +23,3 @@ plugins {
 
 rootProject.name = "kortex.cpp"
 include("kortex-api")
-include("kortex-sandbox")

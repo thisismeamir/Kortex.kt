@@ -12,6 +12,13 @@ import objs.Configuration
 import objs.deletemodel.DeleteModelResponse
 import objs.getmodel.GetModelsResponse
 import objs.getmodel.Model
+import objs.importmodel.ImportModelRequest
+import objs.importmodel.ImportModelResponse
+import objs.addremotemodel.AddRemoteModelRequest
+import objs.addremotemodel.AddRemoteModelResponse
+import objs.addremotemodel.StopModelDownloadResponse
+import objs.pullmodel.PullModelRequest
+import objs.pullmodel.PullModelResponse
 import objs.startmodel.StartModelRequest
 import objs.updatemodel.UpdateModelRequest
 import objs.updatemodel.UpdateModelResponse
@@ -143,4 +150,50 @@ class Kortex() {
         val fixedJson = response.bodyAsText().fixSingleQuotes()
         return json.decodeFromString<UpdateModelResponse>(fixedJson)
     }
+
+    suspend fun addRemoteModel(request: AddRemoteModelRequest): AddRemoteModelResponse {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/models/add") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString<AddRemoteModelResponse>(fixedJson)
+    }
+
+    suspend fun importModel(request: ImportModelRequest): ImportModelResponse {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/models/import") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString<ImportModelResponse>(fixedJson)
+    }
+
+    suspend fun stopModelDownload(taskId: String): StopModelDownloadResponse {
+        val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/models/pull") {
+            contentType(ContentType.Application.Json)
+            setBody("{\"taskId\": \"$taskId\"}")
+        }
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString<StopModelDownloadResponse>(fixedJson)
+    }
+
+    suspend fun pullModel(request: PullModelRequest): PullModelResponse {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/models/pull") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString<PullModelResponse>(fixedJson)
+    }
+
+    suspend fun removeModelSource(request: RemoveModelSourceRequest): RemoveModelSourceResponse {
+        val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/models/sources") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString<RemoveModelSourceResponse>(fixedJson)
+    }
 }
+
