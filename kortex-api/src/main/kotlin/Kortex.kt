@@ -1,7 +1,9 @@
 import io.ktor.client.*
+import io.ktor.client.call.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
+import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -20,8 +22,8 @@ import objs.addremotemodel.AddRemoteModelRequest
 import objs.addremotemodel.AddRemoteModelResponse
 import objs.addremotemodel.StopModelDownloadResponse
 import objs.chat.messages.*
-import objs.chat.threads.DeleteThreadResponse
 import objs.chat.threads.UpdateMetaDataRequest
+import objs.file.File
 import objs.hardware.ActivateGpusRequest
 import objs.hardware.ActivateGpusResponse
 import objs.hardware.HardwareInformation
@@ -33,6 +35,7 @@ import objs.updatemodel.UpdateModelRequest
 import objs.updatemodel.UpdateModelResponse
 import utils.execute
 import utils.fixSingleQuotes
+import java.nio.file.Path
 
 /**
  * Class to interact with the Cortex server using the REST API
@@ -306,7 +309,48 @@ class Kortex() {
         return json.decodeFromString<ActivateGpusResponse>(response.bodyAsText())
     }
 
-}
+    suspend fun getFiles(): List<File> {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/files")
+        return json.decodeFromString<DataListResponse<File>>(response.bodyAsText()).data
+    }
 
+    suspend fun uploadFile(filePath: String, purpose: String): File {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/files") {
+            contentType(ContentType.MultiPart.FormData)
+            setBody(
+                MultiPartFormDataContent(
+                formData {
+                    append("file", java.io.File(filePath).readBytes(), Headers.build {
+                        append(HttpHeaders.ContentDisposition, "form-data; name=\"file\"; filename=\"${java.io.File(filePath).name}\"")
+                    })
+                    append("purpose", purpose)
+                }
+            ))
+        }
+
+        return json.decodeFromString<File>(response.bodyAsText())
+    }
+
+    suspend fun deleteFile(fileId: String): DeleteObjectResponse {
+        val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/files/$fileId")
+        return json.decodeFromString<DeleteObjectResponse>(response.bodyAsText())
+    }
+
+    suspend fun retrieveFile(fileId: String): File {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/files/$fileId")
+        return json.decodeFromString<File>(response.bodyAsText())
+    }
+
+    suspend fun getFileContent(fileId: String, savePath: Path, thread: String? = null) {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/files/$fileId/content") {
+            thread?.let {
+                url {
+                    parameters.append("thread", it.toString())
+                }
+            }
+        }
+        java.io.File(savePath.toString()).writeBytes(response.body<ByteArray>())
+    }
+}
 
 
