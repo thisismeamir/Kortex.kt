@@ -22,6 +22,8 @@ import objs.addremotemodel.StopModelDownloadResponse
 import objs.chat.messages.*
 import objs.chat.threads.DeleteThreadResponse
 import objs.chat.threads.UpdateMetaDataRequest
+import objs.hardware.ActivateGpusRequest
+import objs.hardware.ActivateGpusResponse
 import objs.hardware.HardwareInformation
 import objs.pullmodel.PullModelRequest
 import objs.pullmodel.PullModelResponse
@@ -295,6 +297,15 @@ class Kortex() {
         val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/hardware")
         return json.decodeFromString<HardwareInformation>(response.bodyAsText())
     }
+
+    suspend fun activateGpus(gpus: ActivateGpusRequest): ActivateGpusResponse {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/hardware/activate") {
+            contentType(ContentType.Application.Json)
+            setBody(gpus)
+        }
+        return json.decodeFromString<ActivateGpusResponse>(response.bodyAsText())
+    }
+
 }
 
 
