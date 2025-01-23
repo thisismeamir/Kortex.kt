@@ -23,6 +23,8 @@ import objs.addremotemodel.AddRemoteModelResponse
 import objs.addremotemodel.StopModelDownloadResponse
 import objs.chat.messages.*
 import objs.chat.threads.UpdateMetaDataRequest
+import objs.embedding.CreateEmbeddingRequest
+import objs.embedding.Embedding
 import objs.engine.Engine
 import objs.engine.InstallEngine
 import objs.engine.ReleasedEngine
@@ -335,6 +337,7 @@ class Kortex() {
                 ))
         }
 
+
         return json.decodeFromString<File>(response.bodyAsText())
     }
 
@@ -416,6 +419,14 @@ class Kortex() {
     suspend fun updateEngine(engineName: String): MessageResponse {
         val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/engines/$engineName/update")
         return json.decodeFromString<MessageResponse>(response.bodyAsText())
+    }
+
+    suspend fun createEmbedding(embeddingRequest: CreateEmbeddingRequest): List<Embedding> {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/embeddings"){
+            contentType(ContentType.Application.Json)
+            setBody(embeddingRequest)
+        }
+        return json.decodeFromString<List<Embedding>>(response.bodyAsText())
     }
 }
 
