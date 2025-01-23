@@ -9,6 +9,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import objs.Configuration
+import objs.DataListResponse
 import objs.MessageResponse
 import objs.deletemodel.DeleteModelResponse
 import objs.getmodel.GetModelsResponse
@@ -18,6 +19,9 @@ import objs.importmodel.ImportModelResponse
 import objs.addremotemodel.AddRemoteModelRequest
 import objs.addremotemodel.AddRemoteModelResponse
 import objs.addremotemodel.StopModelDownloadResponse
+import objs.chat.messages.*
+import objs.chat.threads.DeleteThreadResponse
+import objs.chat.threads.UpdateMetaDataRequest
 import objs.pullmodel.PullModelRequest
 import objs.pullmodel.PullModelResponse
 import objs.removemodel.RemoveModelSourceRequest
@@ -57,6 +61,7 @@ class Kortex() {
         ignoreUnknownKeys = true
         namingStrategy = JsonNamingStrategy.SnakeCase
     }
+
 
     /**
      * HTTP client to make requests to the Cortex server
@@ -205,6 +210,84 @@ class Kortex() {
         }
         val fixedJson = response.bodyAsText().fixSingleQuotes()
         return json.decodeFromString<MessageResponse>(fixedJson)
+    }
+
+    suspend fun getThreads(): List<Thread> {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/threads")
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString<DataListResponse<Thread>>(fixedJson).data
+    }
+
+    suspend fun createThread(title: String): Thread {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/threads") {
+            contentType(ContentType.Application.Json)
+            setBody("\"metadata\": {\"title\": \"$title\"}")
+        }
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString(fixedJson)
+    }
+
+    suspend fun deleteThread(threadId: String): DeleteThreadResponse {
+        val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/threads/$threadId")
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString(fixedJson)
+    }
+
+    suspend fun getThread(threadId: String): Thread {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/threads/$threadId")
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString(fixedJson)
+    }
+
+    suspend fun updateThreadMetadata(threadId: String, request: UpdateMetaDataRequest): Thread {
+        val response: HttpResponse = client.patch("http://127.0.0.1:5555/v1/threads/$threadId") {
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString(fixedJson)
+    }
+
+    suspend fun getMessages(threadId: String, queryParameters: ListMessagesQueryParameters): List<Message> {
+        val response: HttpResponse = client.get("https://127.0.0.1:5555/v1/threads/$threadId/messages") {
+            url {
+                parameters.append("before", queryParameters.before)
+                parameters.append("after", queryParameters.after)
+                parameters.append("runId", queryParameters.runId)
+                parameters.append("order", queryParameters.order)
+                parameters.append("limit", queryParameters.limit.toString())
+            }
+        }
+        return json
+            .decodeFromString<DataListResponse<Message>>(
+                response.bodyAsText().fixSingleQuotes()
+            ).data
+    }
+
+    suspend fun createMessage(threadId: String, content: CreateMessageRequestBody): CreateMessageResponse {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/threads/$threadId/messages") {
+            contentType(ContentType.Application.Json)
+            setBody(content)
+        }
+        return json.decodeFromString<CreateMessageResponse>(response.bodyAsText())
+    }
+
+    suspend fun deleteMessage(threadId: String, messageId: String): DeleteModelResponse {
+        val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/threads/$threadId/messages/$messageId")
+        return json.decodeFromString<DeleteModelResponse>(response.bodyAsText())
+    }
+
+    suspend fun retrieveMessage(threadId: String, messageId: String): RetrieveMessageResponse {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/threads/$threadId/messages/$messageId")
+        return json.decodeFromString<RetrieveMessageResponse>(response.bodyAsText())
+    }
+
+    suspend fun modifyMessageMetadata(threadId: String, messageId: String, metadata: String): Message {
+        val response: HttpResponse = client.patch("http://127.0.0.1:5555/v1/threads/$threadId/messages/$messageId"){
+            contentType(ContentType.Application.Json)
+            setBody("{\"metadata\": {$metadata} }")
+        }
+        return json.decodeFromString<Message>(response.bodyAsText())
     }
 
 }
