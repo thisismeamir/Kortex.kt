@@ -22,6 +22,7 @@ import objs.addremotemodel.StopModelDownloadResponse
 import objs.chat.messages.*
 import objs.chat.threads.DeleteThreadResponse
 import objs.chat.threads.UpdateMetaDataRequest
+import objs.hardware.HardwareInformation
 import objs.pullmodel.PullModelRequest
 import objs.pullmodel.PullModelResponse
 import objs.removemodel.RemoveModelSourceRequest
@@ -290,5 +291,11 @@ class Kortex() {
         return json.decodeFromString<Message>(response.bodyAsText())
     }
 
+    suspend fun getHardware(): HardwareInformation {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/hardware")
+        return json.decodeFromString<HardwareInformation>(response.bodyAsText())
+    }
 }
+
+
 
