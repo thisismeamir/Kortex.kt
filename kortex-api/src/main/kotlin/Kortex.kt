@@ -19,6 +19,8 @@ import objs.addremotemodel.AddRemoteModelResponse
 import objs.addremotemodel.StopModelDownloadResponse
 import objs.pullmodel.PullModelRequest
 import objs.pullmodel.PullModelResponse
+import objs.removemodel.RemoveModelSourceReponse
+import objs.removemodel.RemoveModelSourceRequest
 import objs.startmodel.StartModelRequest
 import objs.updatemodel.UpdateModelRequest
 import objs.updatemodel.UpdateModelResponse
@@ -187,13 +189,13 @@ class Kortex() {
         return json.decodeFromString<PullModelResponse>(fixedJson)
     }
 
-    suspend fun removeModelSource(request: RemoveModelSourceRequest): RemoveModelSourceResponse {
+    suspend fun removeModelSource(request: RemoveModelSourceRequest): RemoveModelSourceReponse {
         val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/models/sources") {
             contentType(ContentType.Application.Json)
             setBody(request)
         }
         val fixedJson = response.bodyAsText().fixSingleQuotes()
-        return json.decodeFromString<RemoveModelSourceResponse>(fixedJson)
+        return json.decodeFromString<RemoveModelSourceReponse>(fixedJson)
     }
 }
 
