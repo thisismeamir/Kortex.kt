@@ -23,6 +23,8 @@ import objs.addremotemodel.AddRemoteModelResponse
 import objs.addremotemodel.StopModelDownloadResponse
 import objs.chat.messages.*
 import objs.chat.threads.UpdateMetaDataRequest
+import objs.completions.ChatCompletionRequest
+import objs.completions.ChatCompletionResponse
 import objs.embedding.CreateEmbeddingRequest
 import objs.embedding.Embedding
 import objs.engine.Engine
@@ -427,6 +429,14 @@ class Kortex() {
             setBody(embeddingRequest)
         }
         return json.decodeFromString<List<Embedding>>(response.bodyAsText())
+    }
+
+    suspend fun createChatCompletion(request: ChatCompletionRequest): ChatCompletionResponse{
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/chat/completions"){
+            contentType(ContentType.Application.Json)
+            setBody(request)
+        }
+        return json.decodeFromString<ChatCompletionResponse>(response.bodyAsText())
     }
 }
 
