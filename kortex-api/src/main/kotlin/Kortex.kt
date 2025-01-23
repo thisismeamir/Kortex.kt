@@ -23,6 +23,10 @@ import objs.addremotemodel.AddRemoteModelResponse
 import objs.addremotemodel.StopModelDownloadResponse
 import objs.chat.messages.*
 import objs.chat.threads.UpdateMetaDataRequest
+import objs.engine.Engine
+import objs.engine.InstallEngine
+import objs.engine.ReleasedEngine
+import objs.engine.VariantRequestBody
 import objs.file.File
 import objs.hardware.ActivateGpusRequest
 import objs.hardware.ActivateGpusResponse
@@ -319,13 +323,16 @@ class Kortex() {
             contentType(ContentType.MultiPart.FormData)
             setBody(
                 MultiPartFormDataContent(
-                formData {
-                    append("file", java.io.File(filePath).readBytes(), Headers.build {
-                        append(HttpHeaders.ContentDisposition, "form-data; name=\"file\"; filename=\"${java.io.File(filePath).name}\"")
-                    })
-                    append("purpose", purpose)
-                }
-            ))
+                    formData {
+                        append("file", java.io.File(filePath).readBytes(), Headers.build {
+                            append(
+                                HttpHeaders.ContentDisposition,
+                                "form-data; name=\"file\"; filename=\"${java.io.File(filePath).name}\""
+                            )
+                        })
+                        append("purpose", purpose)
+                    }
+                ))
         }
 
         return json.decodeFromString<File>(response.bodyAsText())
@@ -350,6 +357,65 @@ class Kortex() {
             }
         }
         java.io.File(savePath.toString()).writeBytes(response.body<ByteArray>())
+    }
+
+    suspend fun getInstalledEngines(engineName: String): List<Engine> {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/engines/$engineName")
+        return json.decodeFromString<List<Engine>>(response.bodyAsText())
+    }
+
+    suspend fun getDefaultEngine(engineName: String): Engine {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/engines/$engineName/default")
+        return json.decodeFromString<Engine>(response.bodyAsText())
+    }
+
+    suspend fun setDefaultEngineVariant(engineName: String, variant: VariantRequestBody): MessageResponse {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/engines/$engineName/default") {
+            contentType(ContentType.Application.Json)
+            setBody(variant)
+        }
+        return json.decodeFromString<MessageResponse>(response.bodyAsText())
+    }
+
+    suspend fun uninstallEngine(engineName:String, variant: VariantRequestBody): MessageResponse {
+        val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/engines/$engineName/install") {
+            contentType(ContentType.Application.Json)
+            setBody(variant)
+        }
+        return json.decodeFromString<MessageResponse>(response.bodyAsText())
+    }
+
+    suspend fun installEngine(engineName: String, specification: InstallEngine): MessageResponse {
+        val response: HttpResponse =client.post("http://127.0.0.1:5555/v1/engines/$engineName/install") {
+            contentType(ContentType.Application.Json)
+            setBody(specification)
+        }
+        return json.decodeFromString<MessageResponse>(response.bodyAsText())
+    }
+
+    suspend fun unloadEngine(engineName: String): MessageResponse {
+        val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/engines/$engineName/load")
+        return json.decodeFromString<MessageResponse>(response.bodyAsText())
+    }
+
+    suspend fun loadEngine(engineName: String): MessageResponse {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/engines/$engineName/load")
+        return json.decodeFromString<MessageResponse>(response.bodyAsText())
+    }
+
+    suspend fun getReleasedEngines(engineName: String): List<ReleasedEngine> {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/engines/$engineName/releases")
+        return json.decodeFromString<List<ReleasedEngine>>(response.bodyAsText())
+    }
+
+    suspend fun getLatestEngineRelease(engineName:String): List<ReleasedEngine> {
+        val response: HttpResponse = client.get("http://127.0.0.1:5555/v1/engines/$engineName/releases/latest")
+        return json.decodeFromString<List<ReleasedEngine>>(response.bodyAsText())
+    }
+
+    suspend fun updateEngine(engineName: String): MessageResponse {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/engines/$engineName/update")
+        return json.decodeFromString<MessageResponse>(response.bodyAsText())
     }
 }
 
