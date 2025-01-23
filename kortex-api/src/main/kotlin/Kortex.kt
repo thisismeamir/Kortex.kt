@@ -10,8 +10,8 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import objs.Configuration
 import objs.DataListResponse
+import objs.DeleteObjectResponse
 import objs.MessageResponse
-import objs.deletemodel.DeleteModelResponse
 import objs.getmodel.GetModelsResponse
 import objs.getmodel.Model
 import objs.importmodel.ImportModelRequest
@@ -140,10 +140,10 @@ class Kortex() {
         return Pair(response.status.value, response.bodyAsText())
     }
 
-    suspend fun deleteModel(model: String): DeleteModelResponse {
+    suspend fun deleteModel(model: String): DeleteObjectResponse {
         val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/models/${model}")
         val fixedJson = response.bodyAsText().fixSingleQuotes()
-        return json.decodeFromString<DeleteModelResponse>(fixedJson)
+        return json.decodeFromString<DeleteObjectResponse>(fixedJson)
     }
 
     suspend fun getModel(model: String): Model {
@@ -230,7 +230,7 @@ class Kortex() {
         return json.decodeFromString(fixedJson)
     }
 
-    suspend fun deleteThread(threadId: String): DeleteThreadResponse {
+    suspend fun deleteThread(threadId: String): DeleteObjectResponse {
         val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/threads/$threadId")
         val fixedJson = response.bodyAsText().fixSingleQuotes()
         return json.decodeFromString(fixedJson)
@@ -275,9 +275,9 @@ class Kortex() {
         return json.decodeFromString<CreateMessageResponse>(response.bodyAsText())
     }
 
-    suspend fun deleteMessage(threadId: String, messageId: String): DeleteModelResponse {
+    suspend fun deleteMessage(threadId: String, messageId: String): DeleteObjectResponse {
         val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/threads/$threadId/messages/$messageId")
-        return json.decodeFromString<DeleteModelResponse>(response.bodyAsText())
+        return json.decodeFromString<DeleteObjectResponse>(response.bodyAsText())
     }
 
     suspend fun retrieveMessage(threadId: String, messageId: String): RetrieveMessageResponse {
@@ -286,7 +286,7 @@ class Kortex() {
     }
 
     suspend fun modifyMessageMetadata(threadId: String, messageId: String, metadata: String): Message {
-        val response: HttpResponse = client.patch("http://127.0.0.1:5555/v1/threads/$threadId/messages/$messageId"){
+        val response: HttpResponse = client.patch("http://127.0.0.1:5555/v1/threads/$threadId/messages/$messageId") {
             contentType(ContentType.Application.Json)
             setBody("{\"metadata\": {$metadata} }")
         }
