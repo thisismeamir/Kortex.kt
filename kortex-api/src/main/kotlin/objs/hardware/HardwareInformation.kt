@@ -4,7 +4,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class HardwareInformation(
-    val cpu: CpuInformation
+    val cpu: CpuInformation,
     val gpus: List<GpuInformation>,
     val os: OsInformation,
     val power: PowerInformation,
