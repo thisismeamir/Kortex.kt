@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ListMessagesQueryParameters(
-    val before: String,
-    val after: String,
-    val runId: String,
-    val order: String,
-    val limit: Int
+    val before: String? = null,
+    val after: String? = null,
+    val runId: String? = null,
+    val order: String? = null,
+    val limit: Int? = null
 )

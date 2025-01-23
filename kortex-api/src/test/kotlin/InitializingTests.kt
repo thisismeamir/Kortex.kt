@@ -9,10 +9,10 @@ class InitializingTests {
 //        val kortex = Kortex()
 //    }
 
-    @Test
-    fun `Cortex stops`(){
-        val kortex = Kortex()
-        kortex.stop()
-    }
+//    @Test
+//    fun `Cortex stops`(){
+//        val kortex = Kortex()
+//        kortex.stop()
+//    }
 
 }

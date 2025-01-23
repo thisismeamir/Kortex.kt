@@ -31,7 +31,7 @@ class Models {
     }
 
     @Test
-    fun `Delete Model` () {
+    fun `Delete Model`() {
         println("Be careful, testing this method will delete the model on your computer.")
 //        val kortex = Kortex()
 //        runBlocking {
@@ -52,6 +52,15 @@ class Models {
     @Test
     fun `Update Model`() {
         println("Be careful, testing this method will update the model on your computer.")
-        println("To be done.")
+//        val kortex = Kortex()
+//        runBlocking {
+//            val modelId = kortex.getModels().data.first().id
+//            val updateRequest = UpdateModelRequest(
+//                modelId = modelId,
+//                model = "new-model",
+//                version = "new-version",
+//                engine = "new-engine",)
+//            println(kortex.updateModel(modelId, updateRequest))
+//        }
     }
 }
