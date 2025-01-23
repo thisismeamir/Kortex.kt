@@ -9,6 +9,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import objs.Configuration
+import objs.MessageResponse
 import objs.deletemodel.DeleteModelResponse
 import objs.getmodel.GetModelsResponse
 import objs.getmodel.Model
@@ -19,7 +20,6 @@ import objs.addremotemodel.AddRemoteModelResponse
 import objs.addremotemodel.StopModelDownloadResponse
 import objs.pullmodel.PullModelRequest
 import objs.pullmodel.PullModelResponse
-import objs.removemodel.RemoveModelSourceReponse
 import objs.removemodel.RemoveModelSourceRequest
 import objs.startmodel.StartModelRequest
 import objs.updatemodel.UpdateModelRequest
@@ -189,13 +189,23 @@ class Kortex() {
         return json.decodeFromString<PullModelResponse>(fixedJson)
     }
 
-    suspend fun removeModelSource(request: RemoveModelSourceRequest): RemoveModelSourceReponse {
+    suspend fun removeModelSource(request: RemoveModelSourceRequest): MessageResponse {
         val response: HttpResponse = client.delete("http://127.0.0.1:5555/v1/models/sources") {
             contentType(ContentType.Application.Json)
             setBody(request)
         }
         val fixedJson = response.bodyAsText().fixSingleQuotes()
-        return json.decodeFromString<RemoveModelSourceReponse>(fixedJson)
+        return json.decodeFromString<MessageResponse>(fixedJson)
     }
+
+    suspend fun addModelSource(sourcePath: String): MessageResponse {
+        val response: HttpResponse = client.post("http://127.0.0.1:5555/v1/models/") {
+            contentType(ContentType.Application.Json)
+            setBody("{\"source\": \"$sourcePath\"}")
+        }
+        val fixedJson = response.bodyAsText().fixSingleQuotes()
+        return json.decodeFromString<MessageResponse>(fixedJson)
+    }
+
 }
 
