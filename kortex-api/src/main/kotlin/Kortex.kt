@@ -38,10 +38,16 @@ import objs.removemodel.RemoveModelSourceRequest
 import objs.startmodel.StartModelRequest
 import objs.updatemodel.UpdateModelRequest
 import objs.updatemodel.UpdateModelResponse
+import utils.execute
 import utils.fixSingleQuotes
 import java.nio.file.Path
+import javax.swing.text.AbstractDocument.Content
 
-class Kortex(private val baseUrl: String = "http://127.0.0.1:5555") {
+class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
+
+    init {
+        execute("cortex start")
+    }
 
     @OptIn(ExperimentalSerializationApi::class)
     private val json = Json {
@@ -61,6 +67,7 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:5555") {
 
     suspend fun updateConfiguration(config: Configuration): Pair<Int, String> =
         client.post("$baseUrl/v1/configs") {
+            contentType(ContentType.Application.Json)
             setBody(config)
         }.let { it.status.value to it.bodyAsText() }
 
@@ -70,8 +77,8 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:5555") {
     suspend fun terminateServer(): Int =
         client.delete("$baseUrl/processManager/destroy").status.value
 
-    suspend fun getModels(): GetModelsResponse =
-        json.decodeFromString(client.get("$baseUrl/v1/models").bodyAsText().fixSingleQuotes())
+    suspend fun getModels(): List<Model> =
+        json.decodeFromString<GetModelsResponse>(client.get("$baseUrl/v1/models").bodyAsText().fixSingleQuotes()).data
 
     suspend fun startModel(model: StartModelRequest): Pair<Int, String> =
         client.post("$baseUrl/v1/models/start") {

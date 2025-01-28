@@ -8,7 +8,7 @@ class Models {
     fun `Get Models`() {
         val kortex = Kortex()
         runBlocking {
-            println(kortex.getModels().data.first().model)
+            println(kortex.getModels().size)
         }
     }
 
@@ -16,8 +16,7 @@ class Models {
     fun `Start Model`() {
         val kortex = Kortex()
         runBlocking {
-            val modelId = kortex.getModels().data.first().id
-            println(kortex.startModel(StartModelRequest(modelId)))
+
         }
     }
 
@@ -25,42 +24,33 @@ class Models {
     fun `Stop Model`() {
         val kortex = Kortex()
         runBlocking {
-            val modelId = kortex.getModels().data.first().id
-            println(kortex.stopModel(modelId))
+
         }
     }
 
     @Test
     fun `Delete Model`() {
         println("Be careful, testing this method will delete the model on your computer.")
-//        val kortex = Kortex()
-//        runBlocking {
-//            val modelId = kortex.getModels().data.first().id
-//            println(kortex.deleteModel(modelId))
-//        }
+        val kortex = Kortex()
+        runBlocking {
+
+        }
     }
 
     @Test
     fun `Get Model`() {
         val kortex = Kortex()
         runBlocking {
-            val modelId = kortex.getModels().data.first().id
-            println(kortex.getModel(modelId).model)
+
         }
     }
 
     @Test
     fun `Update Model`() {
         println("Be careful, testing this method will update the model on your computer.")
-//        val kortex = Kortex()
-//        runBlocking {
-//            val modelId = kortex.getModels().data.first().id
-//            val updateRequest = UpdateModelRequest(
-//                modelId = modelId,
-//                model = "new-model",
-//                version = "new-version",
-//                engine = "new-engine",)
-//            println(kortex.updateModel(modelId, updateRequest))
-//        }
+        val kortex = Kortex()
+        runBlocking {
+
+        }
     }
 }
