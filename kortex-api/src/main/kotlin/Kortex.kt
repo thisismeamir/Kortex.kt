@@ -20,10 +20,7 @@ import objs.completions.ChatCompletionRequest
 import objs.completions.ChatCompletionResponse
 import objs.embedding.CreateEmbeddingRequest
 import objs.embedding.Embedding
-import objs.engine.Engine
-import objs.engine.InstallEngine
-import objs.engine.ReleasedEngine
-import objs.engine.VariantRequestBody
+import objs.engine.*
 import objs.file.File
 import objs.getmodel.GetModelsResponse
 import objs.getmodel.Model
@@ -242,7 +239,8 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
         json.decodeFromString(client.get("$baseUrl/v1/engines/$engineName").bodyAsText())
 
     suspend fun getDefaultEngine(engineName: String): Engine =
-        json.decodeFromString(client.get("$baseUrl/v1/engines/$engineName/default").bodyAsText())
+        json.decodeFromString(client.get("$baseUrl/v1/engines/$engineName/default").bodyAsText().replace("variant", "name"))
+//        client.get("$baseUrl/v1/engines/$engineName/default").bodyAsText()
 
     suspend fun setDefaultEngineVariant(engineName: String, variant: VariantRequestBody): MessageResponse =
         json.decodeFromString(client.post("$baseUrl/v1/engines/$engineName/default") {
@@ -271,8 +269,9 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
     suspend fun getReleasedEngines(engineName: String): List<ReleasedEngine> =
         json.decodeFromString(client.get("$baseUrl/v1/engines/$engineName/releases").bodyAsText())
 
-    suspend fun getLatestEngineRelease(engineName: String): List<ReleasedEngine> =
+    suspend fun getLatestEngineRelease(engineName: String): List<LatestReleasedEngine> =
         json.decodeFromString(client.get("$baseUrl/v1/engines/$engineName/releases/latest").bodyAsText())
+//        client.get("$baseUrl/v1/engines/$engineName/releases/latest").bodyAsText()
 
     suspend fun updateEngine(engineName: String): MessageResponse =
         json.decodeFromString(client.post("$baseUrl/v1/engines/$engineName/update").bodyAsText())

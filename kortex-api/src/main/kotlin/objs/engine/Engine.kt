@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class Engine(
     val engine: String,
     val name: String,
-    val version: String
+    val version: String,
 )
 
