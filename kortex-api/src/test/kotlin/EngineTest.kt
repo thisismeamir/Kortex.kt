@@ -1,16 +1,10 @@
-import io.ktor.client.*
+import com.thisismeamir.Kortex
 import io.ktor.client.engine.mock.*
-import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.request.*
-import io.ktor.client.statement.*
 import io.ktor.http.*
-import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.Json
-import objs.engine.InstallEngine
-import objs.engine.VariantRequestBody
+import com.thisismeamir.objs.engine.InstallEngine
+import com.thisismeamir.objs.engine.VariantRequestBody
 import kotlin.test.Test
-import kotlin.test.assertContains
 import kotlin.test.assertEquals
 
 class EngineTest {
@@ -66,7 +60,8 @@ class EngineTest {
             variant ="linux-amd64-avx2-cuda-12-0 0.1.49",
             version = "v0.1.39",
             metadata = mapOf("getModelsUrl" to "https://api.openai.com/v1/models")
-        ))
+        )
+        )
         assertEquals("Engine starts installing!", engine.message)
     }
 

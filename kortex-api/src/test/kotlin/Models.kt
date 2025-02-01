@@ -1,6 +1,5 @@
+import com.thisismeamir.Kortex
 import kotlinx.coroutines.runBlocking
-import objs.startmodel.StartModelRequest
-import objs.updatemodel.UpdateModelRequest
 import org.junit.jupiter.api.Test
 
 class Models {

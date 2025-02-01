@@ -1,7 +1,6 @@
+import com.thisismeamir.Kortex
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
-import utils.CortexLogLevel
-import kotlin.test.BeforeTest
 
 class ConfigurationTests {
 

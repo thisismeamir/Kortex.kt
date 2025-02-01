@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test
-import utils.snakeToCamelCase
+import com.thisismeamir.utils.snakeToCamelCase
 
 class UtilityFunctionTests {
 
