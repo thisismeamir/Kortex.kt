@@ -4,5 +4,5 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateMetaDataRequest(
-    val metadata: ThreadMetadata
+    val metadata: Map<String,String>
 )

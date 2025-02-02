@@ -149,8 +149,8 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
     suspend fun createThread(title: String): MessageThread =
         json.decodeFromString(client.post("$baseUrl/v1/threads") {
             contentType(ContentType.Application.Json)
-            setBody("\"metadata\": {\"title\": \"$title\"}")
-        }.bodyAsText().fixSingleQuotes())
+            setBody("{\"metadata\": {\"title\": \"$title\"}}")
+        }.bodyAsText())
 
     suspend fun deleteThread(threadId: String): DeleteObjectResponse =
         json.decodeFromString(client.delete("$baseUrl/v1/threads/$threadId").bodyAsText().fixSingleQuotes())
@@ -158,11 +158,15 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
     suspend fun getThread(threadId: String): MessageThread =
         json.decodeFromString(client.get("$baseUrl/v1/threads/$threadId").bodyAsText().fixSingleQuotes())
 
-    suspend fun updateThreadMetadata(threadId: String, request: UpdateMetaDataRequest): MessageThread =
-        json.decodeFromString(client.patch("$baseUrl/v1/threads/$threadId") {
+    suspend fun updateThreadMetadata(threadId: String, request: UpdateMetaDataRequest): String =
+        client.put("$baseUrl/v1/threads/$threadId") {
             contentType(ContentType.Application.Json)
             setBody(request)
-        }.bodyAsText().fixSingleQuotes())
+        }.bodyAsText().fixSingleQuotes()
+        //        json.decodeFromString(client.patch("$baseUrl/v1/threads/$threadId") {
+//            contentType(ContentType.Application.Json)
+//            setBody(request)
+//        }.bodyAsText().fixSingleQuotes())
 
     suspend fun getMessages(threadId: String, queryParameters: ListMessagesQueryParameters): List<Message> =
         json.decodeFromString<DataListResponse<Message>>(client.get("$baseUrl/v1/threads/$threadId/messages") {

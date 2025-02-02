@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class MessageThread(
     val createdAt: Long,
     val id: String,
-    val metadata: ThreadMetadata,
+    val metadata: Map<String, String>,
     val `object`: String = "thread"
 )
 
