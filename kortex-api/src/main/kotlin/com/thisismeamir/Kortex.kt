@@ -159,16 +159,14 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
         json.decodeFromString(client.get("$baseUrl/v1/threads/$threadId").bodyAsText().fixSingleQuotes())
 
     suspend fun updateThreadMetadata(threadId: String, request: UpdateMetaDataRequest): String =
-        client.put("$baseUrl/v1/threads/$threadId") {
-            contentType(ContentType.Application.Json)
-            setBody(request)
-        }.bodyAsText().fixSingleQuotes()
+        TODO()
+        // As soon as the bug be fixed at the server side code.
         //        json.decodeFromString(client.patch("$baseUrl/v1/threads/$threadId") {
-//            contentType(ContentType.Application.Json)
-//            setBody(request)
-//        }.bodyAsText().fixSingleQuotes())
+        //            contentType(ContentType.Application.Json)
+        //            setBody(request)
+        //        }.bodyAsText().fixSingleQuotes())
 
-    suspend fun getMessages(threadId: String, queryParameters: ListMessagesQueryParameters): List<Message> =
+    suspend fun getMessages(threadId: String, queryParameters: ListMessagesQueryParameters): DataListResponse<Message> =
         json.decodeFromString<DataListResponse<Message>>(client.get("$baseUrl/v1/threads/$threadId/messages") {
             url {
                 queryParameters.before?.let { it1 -> parameters.append("before", it1) }
@@ -177,7 +175,7 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
                 queryParameters.order?.let { it1 -> parameters.append("order", it1) }
                 parameters.append("limit", queryParameters.limit.toString())
             }
-        }.bodyAsText().fixSingleQuotes()).data
+        }.bodyAsText().fixSingleQuotes())
 
     suspend fun createMessage(threadId: String, content: CreateMessageRequestBody): CreateMessageResponse =
         json.decodeFromString(client.post("$baseUrl/v1/threads/$threadId/messages") {
