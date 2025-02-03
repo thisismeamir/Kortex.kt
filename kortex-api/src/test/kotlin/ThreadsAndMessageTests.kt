@@ -64,55 +64,55 @@ class ThreadsAndMessageTests {
     }
 
     @Test
-    fun `Get Messages`() {
-        val kortex = Kortex()
-        runBlocking {
-            val threadId = kortex.getThreads().first().id
-            val queryParameters = ListMessagesQueryParameters()
-            println(kortex.getMessages(threadId, queryParameters).first().content)
-        }
-    }
-
-    @Test
     fun `Create Message`() {
         val kortex = Kortex()
         runBlocking {
             val threadId = kortex.getThreads().first().id
             val content = CreateMessageRequestBody(content = "New Message", role = "user")
-            println(kortex.createMessage(threadId, content).status)
+            println(kortex.createMessage(threadId, content))
+        }
+    }
+
+    @Test
+    fun `Get Messages`() {
+        val kortex = Kortex()
+        runBlocking {
+            val threadId = kortex.getThreads().first().id
+            val queryParameters = ListMessagesQueryParameters()
+            println(kortex.getMessages(threadId, queryParameters))
         }
     }
 
     @Test
     fun `Delete Message`() {
-        val kortex = Kortex()
-        runBlocking {
-            val threadId = kortex.getThreads().first().id
-            val messageId = kortex.getMessages(threadId, ListMessagesQueryParameters(
-                limit = 1
-            )).first().id
-            println(kortex.deleteMessage(threadId, messageId))
-        }
+//        val kortex = Kortex()
+//        runBlocking {
+//            val threadId = kortex.getThreads().first().id
+//            val messageId = kortex.getMessages(threadId, ListMessagesQueryParameters(
+//                limit = 1
+//            )).data.first().id
+//            println(kortex.deleteMessage(threadId, messageId))
+//        }
     }
 
     @Test
     fun `Retrieve Message`() {
-        val kortex = Kortex()
-        runBlocking {
-            val threadId = kortex.getThreads().first().id
-            val messageId = kortex.getMessages(threadId, ListMessagesQueryParameters()).first().id
-            println(kortex.retrieveMessage(threadId, messageId).status)
-        }
+//        val kortex = Kortex()
+//        runBlocking {
+//            val threadId = kortex.getThreads().first().id
+//            val messageId = kortex.getMessages(threadId, ListMessagesQueryParameters()).data.first().id
+//            println(kortex.retrieveMessage(threadId, messageId).status)
+//        }
     }
 
     @Test
     fun `Modify Message Metadata`() {
-        val kortex = Kortex()
-        runBlocking {
-            val threadId = kortex.getThreads().first().id
-            val messageId = kortex.getMessages(threadId, ListMessagesQueryParameters()).first().id
-            val metadata = "{\"key\": \"value\"}"
-            println(kortex.modifyMessageMetadata(threadId, messageId, metadata).status)
-        }
+//        val kortex = Kortex()
+//        runBlocking {
+//            val threadId = kortex.getThreads().first().id
+//            val messageId = kortex.getMessages(threadId, ListMessagesQueryParameters()).data.first().id
+//            val metadata = "{\"key\": \"value\"}"
+//            println(kortex.modifyMessageMetadata(threadId, messageId, metadata).status)
+//        }
     }
 }

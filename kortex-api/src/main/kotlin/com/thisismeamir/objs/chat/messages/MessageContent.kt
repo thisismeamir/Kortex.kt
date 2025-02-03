@@ -1,3 +1,6 @@
 package com.thisismeamir.objs.chat.messages
 
-interface MessageContent
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed class MessageContent
