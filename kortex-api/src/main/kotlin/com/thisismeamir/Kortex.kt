@@ -166,8 +166,8 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
         //            setBody(request)
         //        }.bodyAsText().fixSingleQuotes())
 
-    suspend fun getMessages(threadId: String, queryParameters: ListMessagesQueryParameters): String =
-//        json.decodeFromString<DataListResponse<Message>>(
+    suspend fun getMessages(threadId: String, queryParameters: ListMessagesQueryParameters): List<CreateMessageResponse> =
+        json.decodeFromString<DataListResponse<CreateMessageResponse>>(
             client.get("$baseUrl/v1/threads/$threadId/messages") {
             url {
                 queryParameters.before?.let { it1 -> parameters.append("before", it1) }
@@ -177,21 +177,25 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
                 parameters.append("limit", queryParameters.limit.toString())
             }
         }.bodyAsText().fixSingleQuotes()
-//    )
+    ).data
 
     suspend fun createMessage(threadId: String, content: CreateMessageRequestBody): CreateMessageResponse =
-        json.decodeFromString(client.post("$baseUrl/v1/threads/$threadId/messages") {
+        json.decodeFromString(
+            client.post("$baseUrl/v1/threads/$threadId/messages") {
             contentType(ContentType.Application.Json)
             setBody(content)
-        }.bodyAsText())
+        }.bodyAsText()
+        )
 
     suspend fun deleteMessage(threadId: String, messageId: String): DeleteObjectResponse =
         json.decodeFromString(client.delete("$baseUrl/v1/threads/$threadId/messages/$messageId").bodyAsText())
 
-    suspend fun retrieveMessage(threadId: String, messageId: String): RetrieveMessageResponse =
-        json.decodeFromString(client.get("$baseUrl/v1/threads/$threadId/messages/$messageId").bodyAsText())
+    suspend fun retrieveMessage(threadId: String, messageId: String): CreateMessageResponse =
+        json.decodeFromString(
+            client.get("$baseUrl/v1/threads/$threadId/messages/$messageId").bodyAsText()
+    )
 
-    suspend fun modifyMessageMetadata(threadId: String, messageId: String, metadata: String): Message =
+    suspend fun modifyMessageMetadata(threadId: String, messageId: String, metadata: String): CreateMessageResponse =
         json.decodeFromString(client.patch("$baseUrl/v1/threads/$threadId/messages/$messageId") {
             contentType(ContentType.Application.Json)
             setBody("{\"metadata\": {$metadata} }")
