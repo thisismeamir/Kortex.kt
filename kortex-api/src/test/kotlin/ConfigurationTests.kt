@@ -1,4 +1,4 @@
-import com.thisismeamir.Kortex
+import io.github.thisismeamir.kortex.Kortex
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 

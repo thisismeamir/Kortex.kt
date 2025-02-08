@@ -1,9 +1,10 @@
 plugins {
     kotlin("jvm") version "2.0.21"
     kotlin("plugin.serialization") version "1.8.0" // or your Kotlin version
+    `maven-publish`
 }
 
-group = "com.thisismeamir"
+group = "io.github.thisismeamir.kortex"
 version = "unspecified"
 
 repositories {
@@ -25,4 +26,15 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(17)
+}
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            groupId = "io.github.thisismeamir"
+            artifactId = "kortex-api"
+            version = "1.0.0"
+
+            from(components["java"])
+        }
+    }
 }

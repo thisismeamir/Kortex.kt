@@ -1,8 +1,8 @@
-import com.thisismeamir.Kortex
-import com.thisismeamir.objs.chat.messages.CreateMessageRequestBody
-import com.thisismeamir.objs.chat.messages.ListMessagesQueryParameters
-import com.thisismeamir.objs.chat.threads.ThreadMetadata
-import com.thisismeamir.objs.chat.threads.UpdateMetaDataRequest
+import io.github.thisismeamir.kortex.Kortex
+import io.github.thisismeamir.kortex.objs.chat.messages.CreateMessageRequestBody
+import io.github.thisismeamir.kortex.objs.chat.messages.ListMessagesQueryParameters
+import io.github.thisismeamir.kortex.objs.chat.threads.ThreadMetadata
+import io.github.thisismeamir.kortex.objs.chat.threads.UpdateMetaDataRequest
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import java.util.UUID

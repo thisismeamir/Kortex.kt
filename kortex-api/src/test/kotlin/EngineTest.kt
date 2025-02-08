@@ -1,9 +1,9 @@
-import com.thisismeamir.Kortex
+import io.github.thisismeamir.kortex.Kortex
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
-import com.thisismeamir.objs.engine.InstallEngine
-import com.thisismeamir.objs.engine.VariantRequestBody
+import io.github.thisismeamir.kortex.objs.engine.InstallEngine
+import io.github.thisismeamir.kortex.objs.engine.VariantRequestBody
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -31,7 +31,7 @@ class EngineTest {
     @Test
     fun testGetDefaultEngine() = runBlocking {
         val engine = kortex.getDefaultEngine("llama-cpp")
-        println(engine)
+        print(engine)
 //        assertEquals("linux-amd64-avx2-cuda-12-0", engine.name)
     }
 

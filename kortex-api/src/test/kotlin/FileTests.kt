@@ -1,4 +1,4 @@
-import com.thisismeamir.Kortex
+import io.github.thisismeamir.kortex.Kortex
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import kotlinx.coroutines.runBlocking

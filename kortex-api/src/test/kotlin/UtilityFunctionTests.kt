@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test
-import com.thisismeamir.utils.snakeToCamelCase
+import io.github.thisismeamir.kortex.utils.snakeToCamelCase
 
 class UtilityFunctionTests {
 
