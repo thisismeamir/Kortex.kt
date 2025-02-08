@@ -214,7 +214,8 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
         json.decodeFromString<DataListResponse<File>>(client.get("$baseUrl/v1/files").bodyAsText()).data
 
     suspend fun uploadFile(filePath: String, purpose: String): File =
-        json.decodeFromString(client.post("$baseUrl/v1/files") {
+        json.decodeFromString(
+            client.post("$baseUrl/v1/files") {
             contentType(ContentType.MultiPart.FormData)
             setBody(
                 MultiPartFormDataContent(
@@ -228,7 +229,8 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
                     append("purpose", purpose)
                 }
             ))
-        }.bodyAsText())
+        }.bodyAsText()
+    )
 
     suspend fun deleteFile(fileId: String): DeleteObjectResponse =
         json.decodeFromString(client.delete("$baseUrl/v1/files/$fileId").bodyAsText())
