@@ -1,6 +1,5 @@
 import io.github.thisismeamir.kortex.Kortex
 import io.github.thisismeamir.kortex.objs.startmodel.StartModelRequest
-import io.github.thisismeamir.kortex.objs.updatemodel.UpdateModelRequest
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 

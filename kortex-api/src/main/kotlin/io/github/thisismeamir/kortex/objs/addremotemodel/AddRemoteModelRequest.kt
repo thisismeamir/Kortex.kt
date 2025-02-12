@@ -1,8 +1,8 @@
 package io.github.thisismeamir.kortex.objs.addremotemodel
 
+import io.github.thisismeamir.kortex.objs.updatemodel.InferenceParams
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
-import io.github.thisismeamir.kortex.objs.updatemodel.InferenceParams
 
 @Serializable
 data class AddRemoteModelRequest(

@@ -4,7 +4,6 @@ import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
 import java.nio.file.Path
 import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class FileTests {
 

@@ -1,9 +1,9 @@
 import io.github.thisismeamir.kortex.Kortex
+import io.github.thisismeamir.kortex.objs.engine.InstallEngine
+import io.github.thisismeamir.kortex.objs.engine.VariantRequestBody
 import io.ktor.client.engine.mock.*
 import io.ktor.http.*
 import kotlinx.coroutines.runBlocking
-import io.github.thisismeamir.kortex.objs.engine.InstallEngine
-import io.github.thisismeamir.kortex.objs.engine.VariantRequestBody
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

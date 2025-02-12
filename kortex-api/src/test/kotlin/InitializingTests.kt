@@ -1,6 +1,3 @@
-import io.github.thisismeamir.kortex.Kortex
-import org.junit.jupiter.api.Test
-
 class InitializingTests {
 
 //     Should not be running, currently one must start
