@@ -4,10 +4,10 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ChatCompletionResponseMessage(
-    val audio: io.github.thisismeamir.kortex.objs.completions.ChatCompletionResponseMessageAudio,
+    val audio: io.github.thisismeamir.kortex.objs.completions.ChatCompletionResponseMessageAudio? = null,
     val content: String,
-    val functionCall: ChatCompletionResponseMessageFunctionCall,
-    val refusal: String,
+    val functionCall: ChatCompletionResponseMessageFunctionCall? = null,
+    val refusal: String? = null,
     val role: String,
-    val toolCalls: List<ChatCompletionResponseMessageToolCall>
+    val toolCalls: List<ChatCompletionResponseMessageToolCall>? =null
 )

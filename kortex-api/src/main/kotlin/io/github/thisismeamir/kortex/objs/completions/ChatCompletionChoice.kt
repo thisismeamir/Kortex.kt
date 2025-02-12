@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class ChatCompletionChoice(
     val finishReason: String,
     val index: Int,
-    val logprobs: ChatCompletionLogprobs,
+    val logprobs: ChatCompletionLogprobs? = null,
     val message: ChatCompletionResponseMessage
 )

@@ -11,8 +11,8 @@ import io.github.thisismeamir.kortex.objs.chat.messages.CreateMessageResponse
 import io.github.thisismeamir.kortex.objs.chat.messages.ListMessagesQueryParameters
 import io.github.thisismeamir.kortex.objs.chat.threads.UpdateMetaDataRequest
 import io.github.thisismeamir.kortex.objs.completions.ChatCompletionRequest
-import io.github.thisismeamir.kortex.objs.embedding.CreateEmbeddingRequest
 import io.github.thisismeamir.kortex.objs.embedding.Embedding
+import io.github.thisismeamir.kortex.objs.embedding.EmbeddingRequest
 import io.github.thisismeamir.kortex.objs.engine.Engine
 import io.github.thisismeamir.kortex.objs.engine.InstallEngine
 import io.github.thisismeamir.kortex.objs.engine.VariantRequestBody
@@ -290,7 +290,7 @@ class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
     suspend fun updateEngine(engineName: String): MessageResponse =
         json.decodeFromString(client.post("$baseUrl/v1/engines/$engineName/update").bodyAsText())
 
-    suspend fun createEmbedding(embeddingRequest: CreateEmbeddingRequest): List<Embedding> =
+    suspend fun <T>createEmbedding(embeddingRequest: EmbeddingRequest<T>): List<Embedding> =
         json.decodeFromString(client.post("$baseUrl/embeddings") {
             contentType(ContentType.Application.Json)
             setBody(embeddingRequest)

@@ -1,7 +1,11 @@
 package io.github.thisismeamir.kortex.objs.embedding
 
-interface CreateEmbeddingRequest {
-    val embeddingFormat: String
-    val input: Any
-    val `object`: String
-}
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class EmbeddingRequest<T> (
+    val embeddingFormat: String,
+    val input: T,
+    val model: String
+)
+

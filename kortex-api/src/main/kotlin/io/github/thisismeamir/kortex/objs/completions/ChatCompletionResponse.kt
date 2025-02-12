@@ -9,7 +9,7 @@ data class ChatCompletionResponse (
     val id: String,
     val model: String,
     val `object`: String,
-    val serviceTier: Boolean,
+    val serviceTier: Boolean? =null,
     val systemFingerprint: String,
     val usage: io.github.thisismeamir.kortex.objs.completions.ChatCompletionUsage
 )
