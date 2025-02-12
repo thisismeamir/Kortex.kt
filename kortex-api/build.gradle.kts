@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "io.github.thisismeamir.kortex"
-version = "unspecified"
+version = "0.1"
 
 repositories {
     mavenCentral()
