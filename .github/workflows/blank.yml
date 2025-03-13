@@ -11,7 +11,7 @@ permissions:
   pages: write
 
 env:
-  INSTANCE: 'Writerside/hi'
+  INSTANCE: 'Writerside/in'
   DOCKER_VERSION: 'XXX.YYYYY'
   # IS_GROUP: 'true'  # Uncomment to build a group
   ALGOLIA_APP_NAME: 'NLAGB2LZHU'
