@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rules SYSTEM "https://resources.jetbrains.com/writerside/1.0/redirection-rules.dtd">
+<rules>
+    <!-- format is as follows
+    <rule id="<unique id>">
+        <accepts>page.html</accepts>
+    </rule>
+    -->
+    <rule id="669a71ad">
+        <description>Created after removal of "Start" from Kortex.cpp Documentation</description>
+        <accepts>Start.html</accepts>
+    </rule>
+    <rule id="63bd0bc">
+        <description>Created after removal of "Hello" from Kortex.cpp Documentation</description>
+        <accepts>starter.html</accepts>
+    </rule>
+    <rule id="6c5cff1b">
+        <description>Created after removal of "How to" from Kortex.cpp Documentation</description>
+        <accepts>How-to.html</accepts>
+    </rule>
+    <rule id="8a31071">
+        <description>Created after removal of "Overview" from Kortex.cpp Documentation</description>
+        <accepts>Overview.html</accepts>
+    </rule>
+    <rule id="764c74ea">
+        <description>Created after removal of "Empty XML Topic" from Kortex.cpp Documentation</description>
+        <accepts>Empty-XML-Topic.html</accepts>
+    </rule>
+    <rule id="3e2b7fce">
+        <description>Created after removal of "Quick Start" from Kortex.cpp Documentation</description>
+        <accepts>Quick-Start.html</accepts>
+    </rule>
+    <rule id="1321e9fb">
+        <description>Created after removal of "Who is this for ?" from Kortex.cpp Documentation</description>
+        <accepts>Who-is-this-for.html</accepts>
+    </rule>
+    <rule id="1f0785cc">
+        <description>Created after removal of "What is Kortex.cpp ?" from Kortex.cpp Documentation</description>
+        <accepts>What-is-Kortex-cpp.html</accepts>
+    </rule>
+    <rule id="57d58b68">
+        <description>Created after removal of "Why use Kortex.cpp" from Kortex.cpp Documentation</description>
+        <accepts>Why-use-Kortex-cpp.html</accepts>
+    </rule>
+    <rule id="c024cad">
+        <description><![CDATA[Created after removal of "<overview.md>" from Kortex.cpp Documentation]]></description>
+        <accepts>overview.html</accepts>
+    </rule>
+</rules>

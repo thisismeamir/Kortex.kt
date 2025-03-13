@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic
+        SYSTEM "https://resources.jetbrains.com/writerside/1.0/xhtml-entities.dtd">
+<topic xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:noNamespaceSchemaLocation="https://resources.jetbrains.com/writerside/1.0/topic.v2.xsd"
+       title="Overview" id="overview">
+
+    <section-starting-page>
+        <title>Kortex.cpp</title>
+        <description>Client side communications with LLM backend, Cortex.</description>
+        <secondary>
+            <title>For Contribution</title>
+            <a href="quick-start-for-dev.md"/>
+            <a href="contribution.md" summary="Learn about contribution guidelines and specific issues concerning it."/>
+        </secondary>
+        <primary>
+            <title>For End Users</title>
+            <a href="Installation.md" summary="Import Kortex.cpp in Gradle or Maven and start coding."/>
+            <a href="quick-start.md" summary="An introductory example of using the library."/>
+        </primary>
+    </section-starting-page>
+</topic>

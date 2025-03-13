@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE terms SYSTEM "https://resources.jetbrains.com/writerside/1.0/glossary.dtd">
+<terms>
+    <term name="Kortex">
+        Kortex is the client library of Cortex backend in Kotlin programming language.
+    </term>
+    <term name="Cortex">
+        Cortex is the open-source brain for robots: vision, speech, language, tabular, and action -- the cloud is optional.
+    </term>
+</terms>

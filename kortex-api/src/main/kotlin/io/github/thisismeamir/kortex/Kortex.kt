@@ -36,12 +36,19 @@ import io.ktor.client.request.*
 import io.ktor.client.request.forms.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
+import io.ktor.serialization.*
 import io.ktor.serialization.kotlinx.json.*
+import io.swagger.annotations.Tag
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.models.media.Content
+import io.swagger.v3.oas.models.media.Schema
+import io.swagger.v3.oas.models.responses.ApiResponse
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonNamingStrategy
 import java.nio.file.Path
 
+@Tag(name = "Kortex", description = "Kortex API")
 class Kortex(private val baseUrl: String = "http://127.0.0.1:39281") {
 
     init {
