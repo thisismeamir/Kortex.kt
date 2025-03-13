@@ -16,7 +16,7 @@ env:
   # Name of module and id separated by a slash
   INSTANCE: Writerside/in
   # Replace XX with the ID of the instance in capital letters
-  ARTIFACT: webHelpIN-all.zip
+  ARTIFACT: webHelpIN2-all.zip
   # Docker image version
   DOCKER_VERSION: 241.18775
 
