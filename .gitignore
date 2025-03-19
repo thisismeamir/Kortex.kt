@@ -15,7 +15,8 @@ gradle.properties
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-
+env
+gradle.properties
 ### Kotlin ###
 .kotlin
 
