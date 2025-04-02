@@ -1,6 +1,6 @@
-# Kortex.cpp
+# Kortex.kt
 
-Kortex.cpp is a client library that enables Kotlin programs to connect to Cortex.cpp, a Local AI API Platform, and use its functionalities to run and customize LLMs.
+Kortex.kt is a client library that enables Kotlin programs to connect to Cortex.cpp, a Local AI API Platform, and use its functionalities to run and customize LLMs.
 
 ## Overview
 
